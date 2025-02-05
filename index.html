@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <!-- 必需元标签 -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    
-    <!-- SEO优化 -->
-    <title>叶氏家族传说 | 初2022级17班铭教宇宙</title>
-    <meta name="description" content="一个关于荒诞、荣耀与少先队员勋章的校园传说">
-    <meta name="author" content="叶氏传说编纂委员会">
-    
-    <!-- 样式表（绝对路径写法） -->
-    <link rel="stylesheet" href="/css/style.css">
-    
-    <!-- 预加载关键资源 -->
-    <link rel="preload" href="/js/main.js" as="script">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-    
-    <!-- 苹果生态优化 -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>叶氏家族传说 - 铭教宇宙</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- 以下body内容保持不变 -->
-    ...
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">叶氏传说</a>
+            <div class="nav-links">
+                <a href="#chapters" class="nav-link">章节</a>
+                <a href="#characters" class="nav-link">角色</a>
+                <a href="#about" class="nav-link">关于</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>十七班的铭教宇宙</h1>
+            <p>一个关于荒诞、荣耀与少先队员勋章的校园传说</p>
+            <div class="cta-button">
+                <a href="#chapters">开始阅读 →</a>
+            </div>
+        </section>
+
+        <!-- 章节卡片区域 -->
+        <section class="chapter-grid" id="chapters">
+            <!-- 卡片内容由JavaScript动态加载 -->
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
