@@ -13,7 +13,7 @@
       --card-shadow: 0 4px 24px rgba(0,0,0,0.06);
       --transition: all 0.4s cubic-bezier(0.28, 0.62, 0.35, 1);
       --surface-1: rgba(255,255,255,0.7);
-      --font-base: -apple-system, BlinkMacSystemFont, "SF Pro SC", "PingFang SC", "Helvetica Neue", "Noto Sans CJK SC", sans-serif;
+      --font-base: "中华新魏", serif;
     }
     * {
       margin: 0;
@@ -32,20 +32,17 @@
       overflow-x: hidden;
     }
 
-    /* 背景图片与高斯模糊动画 */
+    /* 背景（纯色，不加载图片） */
     .background {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('https://example.com/your-background.jpg') center/cover no-repeat;
-      filter: blur(20px);
+      background: linear-gradient(135deg, #ffffff, #f0f0f0);
+      filter: blur(8px);
       transition: filter 1s ease;
       z-index: -2;
-    }
-    body.scrolled .background {
-      filter: blur(8px);
     }
 
     /* 导航栏 */
@@ -94,9 +91,9 @@
       color: var(--accent-blue);
     }
 
-    /* 封面区 */
+    /* 封面区（纯色背景） */
     .cover {
-      background: url('https://example.com/your-cover-image.jpg') center/cover no-repeat;
+      background: var(--bg-color);
       position: relative;
       height: 100vh;
       display: flex;
@@ -113,7 +110,7 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.9);
       z-index: -1;
       transition: background 1s ease;
     }
@@ -129,13 +126,11 @@
       font-size: 1.5rem;
       margin-bottom: 2rem;
     }
+    /* 这里由于不使用图片，封面中签名也以纯文字提示代替 */
     .signature {
-      width: 200px;
-      margin: 0 auto 2rem;
-    }
-    .signature img {
-      width: 100%;
-      border: none;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
     }
     .cta-button a {
       display: inline-flex;
@@ -234,7 +229,25 @@
       color: #666;
       margin-bottom: 1rem;
     }
-    /* 章节卡片中的“立即阅读”按钮 */
+    /* 正文复制区域说明 */
+    .chapter-content {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.7;
+    }
+    .chapter-content p {
+      margin-bottom: 1rem;
+    }
+    /* 自动识别小标题：假设小标题为以“【”开头且以“】”结尾，或以全角冒号结尾的段落 */
+    .chapter-content p.small-heading {
+      font-weight: 700;
+    }
+    /* “立即阅读”按钮 */
     .read-btn {
       margin-top: 1rem;
       display: inline-block;
@@ -323,6 +336,11 @@
     .reader-nav button:hover {
       background: #005bb5;
     }
+    .reader-nav span {
+      margin-left: 1rem;
+      font-size: 1rem;
+      color: #555;
+    }
 
     /* 页脚 */
     footer {
@@ -333,7 +351,7 @@
       color: #888;
     }
 
-    /* 用户阅读授权弹窗（请确认您的访问授权替代传统提示） */
+    /* 用户访问授权弹窗 */
     #popup {
       position: fixed;
       top: 0;
@@ -401,7 +419,7 @@
   <!-- 高斯模糊背景 -->
   <div class="background"></div>
 
-  <!-- 用户阅读授权弹窗 -->
+  <!-- 用户访问授权弹窗 -->
   <div id="popup">
     <div id="popup-content">
       <h2>请确认您的访问授权</h2>
@@ -410,15 +428,13 @@
     </div>
   </div>
 
-  <!-- 封面区域 -->
+  <!-- 封面区域（无图片，纯色） -->
   <section class="cover" id="cover">
     <div class="cover-content">
       <h1>叶氏家族传说</h1>
       <p>蛇年特制版 · 铭教宇宙</p>
-      <!-- 叶铭亲笔签名图片（请替换为真实签名图片链接） -->
-      <div class="signature">
-        <img src="https://example.com/your-signature.png" alt="叶铭亲笔签名">
-      </div>
+      <!-- 由于不使用图片，签名区域采用文字形式 -->
+      <div class="signature">【叶铭亲笔签名】</div>
       <div class="cta-button" style="margin-top: 2rem;">
         <a href="#toc">进入传说世界</a>
       </div>
@@ -482,7 +498,7 @@
       <div class="chapter-content">
         请将《神秘天皇的传闻》的完整正文内容复制在这里
       </div>
-      <!-- “立即阅读”按钮进入全屏阅读器 -->
+      <!-- “立即阅读”按钮，点击后进入全屏阅读器 -->
       <div style="text-align: right; margin-top: 1rem;">
         <a class="read-btn" href="javascript:void(0)" onclick="openReader(1)">立即阅读</a>
       </div>
@@ -603,7 +619,7 @@
     </article>
   </section>
 
-  <!-- 全屏阅读器覆盖层（全屏显示阅读内容） -->
+  <!-- 全屏阅读器覆盖层 -->
   <div id="fullScreenReader" class="full-screen-reader">
     <div class="reader-header">
       <button onclick="closeReader()">返回目录</button>
@@ -611,13 +627,13 @@
     </div>
     <div class="reader-content">
       <div class="pages" id="fullReaderPages">
-        <!-- 阅读页面内容将自动生成分页 -->
+        <!-- 全屏阅读器自动分页内容将自动生成 -->
       </div>
     </div>
     <div class="reader-nav">
       <button onclick="prevPageFull()">上一页</button>
       <button onclick="nextPageFull()">下一页</button>
-      <span id="pageIndicator" style="margin-left: 1rem; font-size: 1rem; color: #555;"></span>
+      <span id="pageIndicator"></span>
     </div>
   </div>
 
@@ -627,7 +643,7 @@
   </footer>
 
   <script>
-    // 用户阅读授权弹窗逻辑
+    // 用户访问授权弹窗逻辑
     function showPopup() {
       document.getElementById("popup").classList.add("show");
     }
@@ -635,25 +651,40 @@
       document.getElementById("popup").classList.remove("show");
     }
     window.onload = function() {
-      showPopup(); // 每次访问显示授权弹窗
+      showPopup(); // 每次访问时显示授权弹窗
       document.body.style.opacity = 0;
       setTimeout(() => {
         document.body.style.transition = 'opacity 0.6s ease';
         document.body.style.opacity = 1;
       }, 100);
+      // 自动识别小标题并加粗
+      autoBoldHeadings();
     };
 
-    // 全屏阅读器与自动分页逻辑
+    // 自动检测每个章节正文中可能为小标题的段落，并加粗
+    function autoBoldHeadings() {
+      const chapters = document.querySelectorAll('.chapter-content');
+      chapters.forEach(chapter => {
+        const paragraphs = chapter.querySelectorAll('p');
+        paragraphs.forEach(p => {
+          const text = p.textContent.trim();
+          // 如果文本以“【”开头且以“】”结尾，或者以全角冒号“：”结尾，且文字较短，则认为是小标题
+          if ((/^【.*】$/.test(text) || text.endsWith("：")) && text.split(" ").length <= 10) {
+            p.classList.add("small-heading");
+          }
+        });
+      });
+    }
+
+    // 全屏阅读器自动分页逻辑
     let currentFullPage = 0;
     let totalFullPages = 0;
-
     function openReader(chapterId) {
-      // 获取章节全文（请确保在章节内容区域粘贴完整正文）
+      // 获取章节全文内容（请确保在章节内容区域内粘贴完整正文）
       const chapterContentDiv = document.querySelector(`#chapter${chapterId} .chapter-content`);
       const fullText = chapterContentDiv.innerText;
-      // 自动分页：根据阅读器容器高度自动拆分全文
       autoPaginate(fullText);
-      // 设置阅读器标题为对应章节标题
+      // 设置阅读器标题
       const chapterTitle = document.querySelector(`#chapter${chapterId} .chapter-title`).innerText;
       document.getElementById('readerTitle').innerText = chapterTitle;
       // 重置页码
@@ -661,16 +692,13 @@
       updatePageIndicator();
       document.getElementById('fullScreenReader').style.display = 'flex';
     }
-
     function closeReader() {
       document.getElementById('fullScreenReader').style.display = 'none';
     }
-
-    // 自动分页函数：根据容器高度拆分文本为多页
     function autoPaginate(text) {
       const pagesContainer = document.getElementById('fullReaderPages');
       pagesContainer.innerHTML = '';
-      // 创建一个临时div，用于测量文本高度
+      // 创建临时div测量文本高度
       const tempDiv = document.createElement('div');
       tempDiv.style.position = 'absolute';
       tempDiv.style.visibility = 'hidden';
@@ -688,11 +716,10 @@
         pageText += words[i] + ' ';
         tempDiv.innerText = pageText;
         if (tempDiv.offsetHeight > containerHeight) {
-          // 超出容器高度，回退当前单词，并保存本页文本
+          // 超出容器高度则分出一页
           const lastSpaceIndex = pageText.lastIndexOf(' ', pageText.length - words[i].length - 1);
           const pageContent = pageText.substring(0, lastSpaceIndex);
           pages.push(pageContent);
-          // 开始下一页时，将当前单词作为起始
           pageText = words[i] + ' ';
         }
       }
@@ -702,15 +729,14 @@
       totalFullPages = pages.length;
       document.body.removeChild(tempDiv);
       
-      // 生成每页的div
-      for (let j = 0; j < pages.length; j++) {
+      // 生成每一页的div
+      pages.forEach(page => {
         const pageDiv = document.createElement('div');
         pageDiv.className = 'page';
-        pageDiv.innerHTML = '<p>' + pages[j] + '</p>';
+        pageDiv.innerHTML = '<p>' + page + '</p>';
         pagesContainer.appendChild(pageDiv);
-      }
+      });
     }
-
     function nextPageFull() {
       const pagesContainer = document.getElementById('fullReaderPages');
       const pages = pagesContainer.querySelectorAll('.page');
@@ -720,7 +746,6 @@
         updatePageIndicator();
       }
     }
-
     function prevPageFull() {
       const pagesContainer = document.getElementById('fullReaderPages');
       if (currentFullPage > 0) {
@@ -729,7 +754,6 @@
         updatePageIndicator();
       }
     }
-
     function updatePageIndicator() {
       document.getElementById('pageIndicator').innerText = (currentFullPage + 1) + ' / ' + totalFullPages;
     }
