@@ -1,175 +1,560 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>叶氏家族传说 - 铭教宇宙</title>
-    <style>
-        :root {
-            --bg-color: #f5f5f7;
-            --text-primary: #1d1d1f;
-            --accent-blue: #0071e3;
-            --card-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>叶氏家族传说 - 蛇年特制版</title>
+  <style>
+    /* 基础变量与重置 */
+    :root {
+      --bg-color: #f5f5f7;
+      --text-primary: #1d1d1f;
+      --accent-blue: #0071e3;
+      --card-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      --transition: all 0.4s cubic-bezier(0.28, 0.62, 0.35, 1);
+      --surface-1: rgba(255,255,255,0.7);
+      --font-base: -apple-system, BlinkMacSystemFont, "SF Pro SC", "PingFang SC", "Helvetica Neue", "Noto Sans CJK SC", sans-serif;
+    }
 
-        /* 基础样式 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: var(--font-base);
+    }
 
-        body {
-            background: var(--bg-color);
-            color: var(--text-primary);
-            line-height: 1.6;
-            padding-top: 60px;
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        /* 导航栏 */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1rem;
-            background: rgba(255,255,255,0.8);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
+    body {
+      background: var(--bg-color);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-        }
+    /* 导航栏 */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1rem 10%;
+      background: var(--surface-1);
+      backdrop-filter: saturate(180%) blur(24px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      z-index: 1000;
+      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
 
-        .nav-link {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
+    .nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        /* 内容容器 */
-        .content-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      transition: transform 0.3s ease;
+    }
 
-        /* 章节标题 */
-        .chapter-title {
-            font-size: 2.2rem;
-            margin: 3rem 0 1.5rem;
-            border-bottom: 2px solid var(--accent-blue);
-            padding-bottom: 0.5rem;
-        }
+    .logo:hover {
+      transform: scale(1.05);
+    }
 
-        /* 段落样式 */
-        .content-section {
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--card-shadow);
-        }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+    }
 
-        /* 图片样式 */
-        figure {
-            margin: 2rem 0;
-            text-align: center;
-        }
+    .nav-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      position: relative;
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+    }
 
-        figure img {
-            max-width: 100%;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent-blue);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: translateX(-50%);
+    }
 
-        figcaption {
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
+    .nav-link:hover {
+      color: var(--accent-blue);
+    }
 
-        /* 移动端优化 */
-        @media (max-width: 768px) {
-            .chapter-title {
-                font-size: 1.8rem;
-            }
-            .content-section {
-                padding: 1rem;
-            }
-        }
-    </style>
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* 主视觉区 */
+    .hero {
+      margin-top: 12rem;
+      padding: 6rem 10%;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      animation: heroEntry 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    @keyframes heroEntry {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 4.2rem);
+      margin-bottom: 1.8rem;
+      background: linear-gradient(45deg, #1d1d1f 30%, #424245 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.08;
+      letter-spacing: -1.5px;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: #86868b;
+      max-width: 720px;
+      margin: 0 auto 3rem;
+      opacity: 0.9;
+    }
+
+    .cta-button a {
+      display: inline-flex;
+      align-items: center;
+      padding: 1rem 2.2rem;
+      background: var(--accent-blue);
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+      border: 1px solid rgba(0,113,227,0.1);
+      gap: 0.8rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button a:hover {
+      background: #0063c7;
+      transform: scale(1.05);
+    }
+
+    .cta-button a::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 10%, transparent 70%);
+      transform: scale(0);
+      transition: transform 0.6s ease;
+    }
+
+    .cta-button a:hover::after {
+      transform: scale(1);
+    }
+
+    /* 章节卡片 */
+    .chapter-grid {
+      padding: 6rem 10%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .chapter-card {
+      background: var(--surface-1);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      cursor: pointer;
+      border: 1px solid rgba(0,0,0,0.03);
+      position: relative;
+    }
+
+    .chapter-card:hover {
+      transform: translateY(-8px) rotateX(2deg) rotateY(1deg);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.1);
+    }
+
+    .chapter-number {
+      font-size: 0.95rem;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .chapter-title {
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.35;
+    }
+
+    /* 内容区 */
+    .chapter-content {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    /* 封面设计：添加蛇年元素与叶铭亲笔签名 */
+    .cover {
+      background: url('https://example.com/your-cover-image.jpg') center/cover no-repeat;
+      height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: var(--text-primary);
+      padding: 0 10%;
+    }
+    .cover::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.6);
+      z-index: 1;
+    }
+    .cover-content {
+      position: relative;
+      z-index: 2;
+    }
+    .cover h1 {
+      font-size: clamp(3rem, 8vw, 5rem);
+      margin-bottom: 1rem;
+    }
+    .cover p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .signature {
+      width: 200px;
+      margin: 0 auto;
+    }
+    .signature img {
+      width: 100%;
+      border: none;
+    }
+
+    /* 弹出式阅读授权提示（不使用“免责声明”字眼） */
+    #popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+    #popup-content {
+      background: #fff;
+      color: #333;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+    }
+    #popup-content h2 {
+      margin-bottom: 15px;
+      font-size: 1.8rem;
+    }
+    #popup-content p {
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+    #popup-content button {
+      padding: 10px 20px;
+      background: var(--accent-blue);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    #popup-content button:hover {
+      background: #005bb5;
+    }
+
+    /* 响应式优化 */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 1rem 5%;
+      }
+      .hero {
+        margin-top: 8rem;
+        padding: 4rem 5%;
+      }
+      .chapter-grid {
+        padding: 4rem 5%;
+        grid-template-columns: 1fr;
+      }
+      .cover h1 {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+      }
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-links">
-            <a href="#part1" class="nav-link">家族传闻</a>
-            <a href="#part2" class="nav-link">人物事件</a>
-            <a href="#part3" class="nav-link">班级回忆</a>
-        </div>
-    </nav>
+  <!-- 用户阅读授权弹窗 -->
+  <div id="popup">
+    <div id="popup-content">
+      <h2>请确认您的访问授权</h2>
+      <p>请仔细阅读并确认您已了解本网站内容及相关要求，点击“同意并继续”后，即表示您认可本网站的全部信息。</p>
+      <button onclick="closePopup()">同意并继续</button>
+    </div>
+  </div>
 
-    <main class="content-container">
-        <!-- 第一部分：家族传闻篇 -->
-        <section id="part1">
-            <h1 class="chapter-title">家族传闻篇</h1>
+  <!-- 封面 -->
+  <section class="cover" id="cover">
+    <div class="cover-content">
+      <h1>叶氏家族传说</h1>
+      <p>蛇年特制版 · 铭教宇宙</p>
+      <!-- 叶铭亲笔签名图片（请将下面链接替换为真实签名图片地址） -->
+      <div class="signature">
+        <img src="https://example.com/your-signature.png" alt="叶铭亲笔签名">
+      </div>
+      <div class="cta-button" style="margin-top: 2rem;">
+        <a href="#toc">进入传说世界</a>
+      </div>
+    </div>
+  </section>
 
-            <article class="content-section" id="chapter1">
-                <h2>第一章：神秘天皇的传说</h2>
-                <p>叶昆轩站在教室中央，掏出一个红色的小盒子...</p>
-                <!-- 此处插入完整章节内容 -->
-                <figure>
-                    <img src="images/image1.jpeg" alt="叶昆轩展示勋章">
-                    <figcaption>叶昆轩的神秘-笑</figcaption>
-                </figure>
-            </article>
+  <!-- 导航菜单（固定） -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <a href="#cover" class="logo">叶氏传说</a>
+      <div class="nav-links">
+        <a href="#toc" class="nav-link">目录</a>
+        <a href="#part1" class="nav-link">家族传闻篇</a>
+        <a href="#part2" class="nav-link">人物事件篇</a>
+        <a href="#part3" class="nav-link">班级回忆篇</a>
+      </div>
+    </div>
+  </nav>
 
-            <article class="content-section" id="chapter2">
-                <h2>第二章：天象之子的降世</h2>
-                <p>昆轩用神秘的语气讲述着父亲的出生...</p>
-                <!-- 此处插入完整章节内容 -->
-            </article>
-        </section>
+  <!-- 目录 -->
+  <section id="toc" style="padding: 6rem 10%; background: var(--bg-color);">
+    <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">目录</h2>
+    <ul style="list-style: none; font-size: 1.2rem; line-height: 2;">
+      <li><strong>第一部分：家族传闻篇</strong>
+        <ul>
+          <li>第一章：神秘天皇的传闻</li>
+          <li>第二章：叶铭与天象之谜</li>
+          <li>第三章：铭教的崛起与衰落</li>
+        </ul>
+      </li>
+      <li><strong>第二部分：人物事件篇</strong>
+        <ul>
+          <li>第四章：走狗的崛起</li>
+          <li>第五章：叶昆轩与姚某之争</li>
+          <li>第六章：PC榜的荒诞真相</li>
+          <li>第七章：撒泼与冲突——班级奇谈录</li>
+        </ul>
+      </li>
+      <li><strong>第三部分：班级回忆与反思篇</strong>
+        <ul>
+          <li>第八章：众生百态中的叶昆轩</li>
+          <li>第九章：趣闻与反思的余韵</li>
+        </ul>
+      </li>
+    </ul>
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="#part1" class="cta-button">开始阅读</a>
+    </div>
+  </section>
 
-        <!-- 第二部分：人物事件篇 -->
-        <section id="part2">
-            <h1 class="chapter-title">人物事件篇</h1>
+  <!-- 第一部分：家族传闻篇 -->
+  <section id="part1" style="padding: 6rem 10%; background: #fff;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">第一部分：家族传闻篇</h2>
 
-            <article class="content-section" id="chapter3">
-                <h2>走狗的崛起</h2>
-                <p>初一时，昆轩成为英语老师的"得力助手"...</p>
-                <figure>
-                    <img src="images/image4.jpeg" alt="叶昆轩与老师通话">
-                    <figcaption>受命通言</figcaption>
-                </figure>
-            </article>
+    <!-- 第一章：神秘天皇的传闻 -->
+    <article id="chapter1" style="margin-bottom: 4rem;">
+      <span style="font-size: 1rem; color: var(--accent-blue);">第一章</span>
+      <h3 style="font-size: 2rem; margin: 1rem 0;">神秘天皇的传闻</h3>
+      <p style="font-size: 1.2rem; color: #666;">一个家族的荣耀与错位的真实</p>
+      <!-- 正文复制区域：将第一章的正文内容粘贴到下面的 div 内 -->
+      <div class="chapter-content">
+        <!-- 请粘贴《神秘天皇的传闻》完整正文内容（约8000字） -->
+      </div>
+    </article>
 
-            <!-- 更多章节... -->
-        </section>
+    <!-- 第二章：叶铭与天象之谜 -->
+    <article id="chapter2" style="margin-bottom: 4rem;">
+      <span style="font-size: 1rem; color: var(--accent-blue);">第二章</span>
+      <h3 style="font-size: 2rem; margin: 1rem 0;">叶铭与天象之谜</h3>
+      <p style="font-size: 1.2rem; color: #666;">传说中的“天命之子”与铭教的起源</p>
+      <!-- 正文复制区域：请粘贴《叶铭与天象之谜》的正文内容 -->
+      <div class="chapter-content">
+        <!-- 请粘贴正文内容 -->
+      </div>
+    </article>
 
-        <!-- 第三部分：班级回忆篇 -->
-        <section id="part3">
-            <h1 class="chapter-title">班级回忆篇</h1>
+    <!-- 第三章：铭教的崛起与衰落 -->
+    <article id="chapter3" style="margin-bottom: 4rem;">
+      <span style="font-size: 1rem; color: var(--accent-blue);">第三章</span>
+      <h3 style="font-size: 2rem; margin: 1rem 0;">铭教的崛起与衰落</h3>
+      <p style="font-size: 1.2rem; color: #666;">家族宗教的荣耀与班级文化的戏谑</p>
+      <!-- 正文复制区域：请粘贴《铭教的崛起与衰落》的正文内容 -->
+      <div class="chapter-content">
+        <!-- 请粘贴正文内容 -->
+      </div>
+    </article>
+  </section>
 
-            <article class="content-section" id="chapter7">
-                <h2>众生百态中的叶昆轩</h2>
-                <p>李云龙评价道："昆轩是个笑点制造机..."</p>
-                <figure>
-                    <img src="images/image5.jpeg" alt="班级场景">
-                    <figcaption>班级众生相</figcaption>
-                </figure>
-            </article>
-        </section>
+  <!-- 第二部分：人物事件篇 -->
+  <section id="part2" style="padding: 6rem 10%; background: var(--bg-color);">
+    <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">第二部分：人物事件篇</h2>
 
-        <!-- 版本声明 -->
-        <div class="content-section" style="background: #f8f9fa; margin-top: 3rem;">
-            <p style="color: #666; font-size: 0.9rem;">本故事尚在雕琢中，未来或有增删润色，正式篇章将以定稿为准。</p>
-        </div>
-    </main>
+    <!-- 第四章：走狗的崛起 -->
+    <article id="chapter4" style="margin-bottom: 4rem;">
+      <span style="font-size: 1rem; color: var(--accent-blue);">第四章</span>
+      <h3 style="font-size: 2rem; margin: 1rem 0;">走狗的崛起</h3>
+      <p style="font-size: 1.2rem; color: #666;">叶昆轩与英语老师何军君的特殊关系</p>
+      <!-- 正文复制区域：请粘贴《走狗的崛起》的正文内容 -->
+      <div class="chapter-content">
+        <!-- 请粘贴正文内容 -->
+      </div>
+    </article>
+
+    <!-- 第五章：叶昆轩与姚某之争 -->
+    <article id="chapter5" style="margin-bottom: 4rem;">
+      <span style="font-size: 1rem; color: var(--accent-blue);">第五章</span>
+      <h3 style="font-size: 2rem; margin: 1rem 0;">叶昆轩与姚某之争</h3>
+      <p style="font-size: 1.2rem; color: #666;">外号引发的冲突与班主任的严厉质问</p>
+      <!-- 正文复制区域：请粘贴《叶昆轩与姚某之争》的正文内容 -->
+      <div class="chapter-content">
+        <!-- 请粘贴正文内容 -->
+      </div>
+    </article>
+
+    <!-- 第六章：PC榜的荒诞真相 -->
+    <article id="chapter6" style="margin-bottom: 4rem;">
+      <span style="font-size: 1rem; color: var(--accent-blue);">第六章</span>
+      <h3 style="font-size: 2rem; margin: 1rem 0;">PC榜的荒诞真相</h3>
+      <p style="font-size: 1.2rem; color: #666;">一个神秘榜单的诞生与崩塌</p>
+      <!-- 正文复制区域：请粘贴《PC榜的荒诞真相》的正文内容 -->
+      <div class="chapter-content">
+        <!-- 请粘贴正文内容 -->
+      </div>
+    </article>
+
+    <!-- 第七章：撒泼与冲突——班级奇谈录 -->
+    <article id="chapter7" style="margin-bottom: 4rem;">
+      <span style="font-size: 1rem; color: var(--accent-blue);">第七章</span>
+      <h3 style="font-size: 2rem; margin: 1rem 0;">撒泼与冲突——班级奇谈录</h3>
+      <p style="font-size: 1.2rem; color: #666;">从小冲突到大争执，荒诞情节无处不在</p>
+      <!-- 正文复制区域：请粘贴《撒泼与冲突——班级奇谈录》的正文内容 -->
+      <div class="chapter-content">
+        <!-- 请粘贴正文内容 -->
+      </div>
+    </article>
+  </section>
+
+  <!-- 第三部分：班级回忆与反思篇 -->
+  <section id="part3" style="padding: 6rem 10%; background: #fff;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">第三部分：班级回忆与反思篇</h2>
+
+    <!-- 第八章：众生百态中的叶昆轩 -->
+    <article id="chapter8" style="margin-bottom: 4rem;">
+      <span style="font-size: 1rem; color: var(--accent-blue);">第八章</span>
+      <h3 style="font-size: 2rem; margin: 1rem 0;">众生百态中的叶昆轩</h3>
+      <p style="font-size: 1.2rem; color: #666;">班级视角下的“笑点担当”</p>
+      <!-- 正文复制区域：请粘贴《众生百态中的叶昆轩》的正文内容 -->
+      <div class="chapter-content">
+        <!-- 请粘贴正文内容 -->
+      </div>
+    </article>
+
+    <!-- 第九章：趣闻与反思的余韵 -->
+    <article id="chapter9" style="margin-bottom: 4rem;">
+      <span style="font-size: 1rem; color: var(--accent-blue);">第九章</span>
+      <h3 style="font-size: 2rem; margin: 1rem 0;">趣闻与反思的余韵</h3>
+      <p style="font-size: 1.2rem; color: #666;">传说的终结与青春的延续</p>
+      <!-- 正文复制区域：请粘贴《趣闻与反思的余韵》的正文内容 -->
+      <div class="chapter-content">
+        <!-- 请粘贴正文内容 -->
+      </div>
+    </article>
+  </section>
+
+  <!-- 页脚 -->
+  <footer style="padding: 2rem 10%; background: var(--bg-color); text-align: center; font-size: 0.9rem; color: #888;">
+    <p>© 2023 叶氏家族传说 · 蛇年特制版</p>
+  </footer>
+
+  <!-- JavaScript 部分 -->
+  <script>
+    // 用户阅读授权弹窗逻辑
+    function showPopup() {
+      document.getElementById("popup").classList.add("show");
+    }
+    function closePopup() {
+      document.getElementById("popup").classList.remove("show");
+    }
+    window.onload = function() {
+      // 每次访问均显示弹窗
+      showPopup();
+      // 页面加载渐显效果
+      document.body.style.opacity = 0;
+      setTimeout(() => {
+        document.body.style.transition = 'opacity 0.6s ease';
+        document.body.style.opacity = 1;
+      }, 100);
+    };
+
+    // 简单滚动动画（可根据需要扩展）
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll('[data-animate]');
+      elements.forEach(element => {
+        const rect = element.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.8 && rect.bottom > 0) {
+          element.style.opacity = 1;
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    };
+    window.addEventListener('scroll', animateOnScroll);
+    animateOnScroll();
+  </script>
 </body>
 </html>
+
