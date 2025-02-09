@@ -13,7 +13,7 @@
       --card-shadow: 0 4px 24px rgba(0,0,0,0.06);
       --transition: all 0.4s cubic-bezier(0.28, 0.62, 0.35, 1);
       --surface-1: rgba(255,255,255,0.7);
-      --font-base: -apple-system, BlinkMacSystemFont, "SF Pro SC", "PingFang SC", "Helvetica Neue", sans-serif;
+      --font-base: -apple-system, BlinkMacSystemFont, "SF Pro SC", "PingFang SC", "Helvetica Neue", "Noto Sans CJK SC", sans-serif;
     }
     * {
       margin: 0;
@@ -31,8 +31,8 @@
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
-    
-    /* 背景图片与高斯模糊动画 */
+
+    /* 背景与高斯模糊动画 */
     .background {
       position: fixed;
       top: 0;
@@ -48,7 +48,7 @@
     body.scrolled .background {
       filter: blur(8px);
     }
-    
+
     /* 导航栏 */
     .navbar {
       position: fixed;
@@ -94,7 +94,7 @@
     .nav-link:hover {
       color: var(--accent-blue);
     }
-    
+
     /* 封面区 */
     .cover {
       background: url('https://example.com/your-cover-image.jpg') center/cover no-repeat;
@@ -171,7 +171,7 @@
     .cta-button a:hover::after {
       transform: scale(1);
     }
-    
+
     /* 目录与章节区 */
     .section {
       padding: 6rem 10%;
@@ -200,7 +200,7 @@
     .toc-list a:hover {
       color: var(--accent-blue);
     }
-    
+
     /* 章节卡片 */
     .chapter-grid {
       display: grid;
@@ -235,51 +235,80 @@
       color: #666;
       margin-bottom: 1rem;
     }
-    .chapter-content {
+    /* 每个章节卡片中增加“立即阅读”按钮 */
+    .read-btn {
       margin-top: 1rem;
-      padding: 1rem;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      font-size: 1rem;
-      color: #333;
-      line-height: 1.7;
-      display: none; /* 默认隐藏，点击后展开 */
-    }
-    .read-toggle {
       display: inline-block;
-      margin-top: 1rem;
       padding: 0.5rem 1rem;
       background: var(--accent-blue);
       color: #fff;
       border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .read-btn:hover {
+      background: #005bb5;
+    }
+    /* 隐藏章节内嵌阅读器（我们使用全屏阅读器） */
+    .chapter-reader {
+      display: none;
+    }
+
+    /* 全屏阅读器（覆盖整个屏幕） */
+    .full-screen-reader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      z-index: 3000;
+      display: none;
+      flex-direction: column;
+    }
+    .reader-header {
+      padding: 1rem 10%;
+      background: var(--surface-1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .reader-header button {
+      padding: 0.5rem 1rem;
+      background: var(--accent-blue);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
       transition: background 0.3s ease;
     }
-    .read-toggle:hover {
+    .reader-header button:hover {
       background: #005bb5;
     }
-
-    /* 阅读器样式（内置翻页效果） */
-    .reader {
-      position: relative;
+    .reader-content {
+      flex: 1;
       overflow: hidden;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    .reader .pages {
+    .pages {
       display: flex;
       transition: transform 0.6s ease;
       width: 100%;
+      height: 100%;
     }
-    .reader .page {
+    .page {
       min-width: 100%;
       padding: 2rem;
+      overflow-y: auto;
     }
     .reader-nav {
-      margin-top: 1rem;
+      padding: 1rem;
       text-align: center;
+      background: var(--surface-1);
     }
     .reader-nav button {
       padding: 0.5rem 1rem;
@@ -304,7 +333,7 @@
       color: #888;
     }
 
-    /* 用户阅读授权弹窗 */
+    /* 用户阅读授权弹窗（提示文字替代“免责声明”） */
     #popup {
       position: fixed;
       top: 0;
@@ -315,7 +344,7 @@
       display: none;
       justify-content: center;
       align-items: center;
-      z-index: 2000;
+      z-index: 4000;
     }
     #popup-content {
       background: #fff;
@@ -390,7 +419,7 @@
     <div class="cover-content">
       <h1>叶氏家族传说</h1>
       <p>蛇年特制版 · 铭教宇宙</p>
-      <!-- 叶铭亲笔签名图片（请替换为真实链接） -->
+      <!-- 叶铭亲笔签名图片（请替换为真实签名图片链接） -->
       <div class="signature">
         <img src="https://example.com/your-signature.png" alt="叶铭亲笔签名">
       </div>
@@ -414,7 +443,7 @@
   </nav>
 
   <!-- 目录 -->
-  <section id="toc" class="section">
+  <section id="toc" class="section" style="background: var(--bg-color);">
     <h2>目录</h2>
     <ul class="toc-list">
       <li><strong>第一部分：家族传闻篇</strong>
@@ -453,22 +482,13 @@
       <span class="chapter-number">第一章</span>
       <h3 class="chapter-title">神秘天皇的传闻</h3>
       <p class="chapter-description">一个家族的荣耀与错位的真实</p>
-      <!-- 阅读器：请在此区域内粘贴《神秘天皇的传闻》的完整正文（约8000字） -->
+      <!-- 正文复制区域：请将《神秘天皇的传闻》的完整正文内容粘贴到下面的 div 内（约8000字） -->
       <div class="chapter-content">
         <!-- 请粘贴正文内容 -->
       </div>
-      <!-- 阅读器控制按钮 -->
-      <div class="reader" id="reader1">
-        <div class="pages" id="pages1">
-          <!-- 每一页作为一个 div.page，用户可通过按钮翻页 -->
-          <div class="page">【第1页内容，请粘贴正文分段内容】</div>
-          <div class="page">【第2页内容】</div>
-          <!-- 根据需要添加更多页面 -->
-        </div>
-        <div class="reader-nav">
-          <button onclick="prevPage(1)">上一页</button>
-          <button onclick="nextPage(1)">下一页</button>
-        </div>
+      <!-- 章节跳转按钮 -->
+      <div style="text-align: right; margin-top: 1rem;">
+        <a class="read-btn" href="javascript:void(0)" onclick="openReader(1)">立即阅读</a>
       </div>
     </article>
 
@@ -477,20 +497,11 @@
       <span class="chapter-number">第二章</span>
       <h3 class="chapter-title">叶铭与天象之谜</h3>
       <p class="chapter-description">传说中的“天命之子”与铭教的起源</p>
-      <!-- 正文复制区域 -->
       <div class="chapter-content">
         <!-- 请粘贴正文内容 -->
       </div>
-      <div class="reader" id="reader2">
-        <div class="pages" id="pages2">
-          <div class="page">【第1页内容】</div>
-          <div class="page">【第2页内容】</div>
-          <!-- 根据需要添加更多页面 -->
-        </div>
-        <div class="reader-nav">
-          <button onclick="prevPage(2)">上一页</button>
-          <button onclick="nextPage(2)">下一页</button>
-        </div>
+      <div style="text-align: right; margin-top: 1rem;">
+        <a class="read-btn" href="javascript:void(0)" onclick="openReader(2)">立即阅读</a>
       </div>
     </article>
 
@@ -499,20 +510,11 @@
       <span class="chapter-number">第三章</span>
       <h3 class="chapter-title">铭教的崛起与衰落</h3>
       <p class="chapter-description">家族宗教的荣耀与班级文化的戏谑</p>
-      <!-- 正文复制区域 -->
       <div class="chapter-content">
         <!-- 请粘贴正文内容 -->
       </div>
-      <div class="reader" id="reader3">
-        <div class="pages" id="pages3">
-          <div class="page">【第1页内容】</div>
-          <div class="page">【第2页内容】</div>
-          <!-- 根据需要添加更多页面 -->
-        </div>
-        <div class="reader-nav">
-          <button onclick="prevPage(3)">上一页</button>
-          <button onclick="nextPage(3)">下一页</button>
-        </div>
+      <div style="text-align: right; margin-top: 1rem;">
+        <a class="read-btn" href="javascript:void(0)" onclick="openReader(3)">立即阅读</a>
       </div>
     </article>
   </section>
@@ -527,17 +529,10 @@
       <h3 class="chapter-title">走狗的崛起</h3>
       <p class="chapter-description">叶昆轩与英语老师何军君的特殊关系</p>
       <div class="chapter-content">
-        <!-- 请粘贴《走狗的崛起》的正文内容 -->
+        <!-- 请粘贴正文内容 -->
       </div>
-      <div class="reader" id="reader4">
-        <div class="pages" id="pages4">
-          <div class="page">【第1页内容】</div>
-          <div class="page">【第2页内容】</div>
-        </div>
-        <div class="reader-nav">
-          <button onclick="prevPage(4)">上一页</button>
-          <button onclick="nextPage(4)">下一页</button>
-        </div>
+      <div style="text-align: right; margin-top: 1rem;">
+        <a class="read-btn" href="javascript:void(0)" onclick="openReader(4)">立即阅读</a>
       </div>
     </article>
 
@@ -547,17 +542,10 @@
       <h3 class="chapter-title">叶昆轩与姚某之争</h3>
       <p class="chapter-description">外号引发的冲突与班主任的严厉质问</p>
       <div class="chapter-content">
-        <!-- 请粘贴《叶昆轩与姚某之争》的正文内容 -->
+        <!-- 请粘贴正文内容 -->
       </div>
-      <div class="reader" id="reader5">
-        <div class="pages" id="pages5">
-          <div class="page">【第1页内容】</div>
-          <div class="page">【第2页内容】</div>
-        </div>
-        <div class="reader-nav">
-          <button onclick="prevPage(5)">上一页</button>
-          <button onclick="nextPage(5)">下一页</button>
-        </div>
+      <div style="text-align: right; margin-top: 1rem;">
+        <a class="read-btn" href="javascript:void(0)" onclick="openReader(5)">立即阅读</a>
       </div>
     </article>
 
@@ -567,17 +555,10 @@
       <h3 class="chapter-title">PC榜的荒诞真相</h3>
       <p class="chapter-description">一个神秘榜单的诞生与崩塌</p>
       <div class="chapter-content">
-        <!-- 请粘贴《PC榜的荒诞真相》的正文内容 -->
+        <!-- 请粘贴正文内容 -->
       </div>
-      <div class="reader" id="reader6">
-        <div class="pages" id="pages6">
-          <div class="page">【第1页内容】</div>
-          <div class="page">【第2页内容】</div>
-        </div>
-        <div class="reader-nav">
-          <button onclick="prevPage(6)">上一页</button>
-          <button onclick="nextPage(6)">下一页</button>
-        </div>
+      <div style="text-align: right; margin-top: 1rem;">
+        <a class="read-btn" href="javascript:void(0)" onclick="openReader(6)">立即阅读</a>
       </div>
     </article>
 
@@ -587,17 +568,10 @@
       <h3 class="chapter-title">撒泼与冲突——班级奇谈录</h3>
       <p class="chapter-description">从小冲突到大争执，荒诞情节无处不在</p>
       <div class="chapter-content">
-        <!-- 请粘贴《撒泼与冲突——班级奇谈录》的正文内容 -->
+        <!-- 请粘贴正文内容 -->
       </div>
-      <div class="reader" id="reader7">
-        <div class="pages" id="pages7">
-          <div class="page">【第1页内容】</div>
-          <div class="page">【第2页内容】</div>
-        </div>
-        <div class="reader-nav">
-          <button onclick="prevPage(7)">上一页</button>
-          <button onclick="nextPage(7)">下一页</button>
-        </div>
+      <div style="text-align: right; margin-top: 1rem;">
+        <a class="read-btn" href="javascript:void(0)" onclick="openReader(7)">立即阅读</a>
       </div>
     </article>
   </section>
@@ -612,17 +586,10 @@
       <h3 class="chapter-title">众生百态中的叶昆轩</h3>
       <p class="chapter-description">班级视角下的“笑点担当”</p>
       <div class="chapter-content">
-        <!-- 请粘贴《众生百态中的叶昆轩》的正文内容 -->
+        <!-- 请粘贴正文内容 -->
       </div>
-      <div class="reader" id="reader8">
-        <div class="pages" id="pages8">
-          <div class="page">【第1页内容】</div>
-          <div class="page">【第2页内容】</div>
-        </div>
-        <div class="reader-nav">
-          <button onclick="prevPage(8)">上一页</button>
-          <button onclick="nextPage(8)">下一页</button>
-        </div>
+      <div style="text-align: right; margin-top: 1rem;">
+        <a class="read-btn" href="javascript:void(0)" onclick="openReader(8)">立即阅读</a>
       </div>
     </article>
 
@@ -632,27 +599,36 @@
       <h3 class="chapter-title">趣闻与反思的余韵</h3>
       <p class="chapter-description">传说的终结与青春的延续</p>
       <div class="chapter-content">
-        <!-- 请粘贴《趣闻与反思的余韵》的正文内容 -->
+        <!-- 请粘贴正文内容 -->
       </div>
-      <div class="reader" id="reader9">
-        <div class="pages" id="pages9">
-          <div class="page">【第1页内容】</div>
-          <div class="page">【第2页内容】</div>
-        </div>
-        <div class="reader-nav">
-          <button onclick="prevPage(9)">上一页</button>
-          <button onclick="nextPage(9)">下一页</button>
-        </div>
+      <div style="text-align: right; margin-top: 1rem;">
+        <a class="read-btn" href="javascript:void(0)" onclick="openReader(9)">立即阅读</a>
       </div>
     </article>
   </section>
+
+  <!-- 全屏阅读器覆盖层 -->
+  <div id="fullScreenReader" class="full-screen-reader">
+    <div class="reader-header">
+      <button onclick="closeReader()">返回目录</button>
+      <h2 id="readerTitle">章节标题</h2>
+    </div>
+    <div class="reader-content">
+      <div class="pages" id="fullReaderPages">
+        <!-- 阅读页面内容，每页一个 div.page -->
+      </div>
+    </div>
+    <div class="reader-nav">
+      <button onclick="prevPageFull()">上一页</button>
+      <button onclick="nextPageFull()">下一页</button>
+    </div>
+  </div>
 
   <!-- 页脚 -->
   <footer>
     <p>© 2023 叶氏家族传说 · 蛇年特制版</p>
   </footer>
 
-  <!-- JavaScript 部分 -->
   <script>
     // 用户阅读授权弹窗逻辑
     function showPopup() {
@@ -672,7 +648,61 @@
       }, 100);
     };
 
-    // 简单滚动动画
+    // 全屏阅读器逻辑
+    let currentFullPage = 0;
+    function openReader(chapterId) {
+      // 根据章节ID，从对应章节中获取阅读器内容并填充到全屏阅读器
+      // 假设每个章节卡片内的全屏阅读内容已经预先放入隐藏的阅读器区域内
+      // 这里我们简单地克隆该章节的 .chapter-content 内容作为页面内容
+      const chapterContent = document.querySelector(`#chapter${chapterId} .chapter-content`).innerHTML;
+      // 假设页面内容已经分页（你可以预先以某种分隔符将内容拆分为多个页面）
+      // 这里为了示例，我们简单地将内容包裹为两个示例页
+      const fullReaderPages = document.getElementById('fullReaderPages');
+      fullReaderPages.innerHTML = '';
+      // 示例：将内容拆分为两页（实际使用时请根据实际分页需求进行拆分）
+      const page1 = document.createElement('div');
+      page1.className = 'page';
+      page1.innerHTML = '<p>' + chapterContent + '（第1页内容示例）</p>';
+      const page2 = document.createElement('div');
+      page2.className = 'page';
+      page2.innerHTML = '<p>' + chapterContent + '（第2页内容示例）</p>';
+      fullReaderPages.appendChild(page1);
+      fullReaderPages.appendChild(page2);
+      
+      // 设置阅读器标题
+      const chapterTitle = document.querySelector(`#chapter${chapterId} .chapter-title`).innerText;
+      document.getElementById('readerTitle').innerText = chapterTitle;
+      
+      // 重置全屏阅读器页面索引
+      currentFullPage = 0;
+      fullReaderPages.style.transform = 'translateX(0)';
+      
+      // 显示全屏阅读器
+      document.getElementById('fullScreenReader').style.display = 'flex';
+    }
+
+    function closeReader() {
+      document.getElementById('fullScreenReader').style.display = 'none';
+    }
+
+    function nextPageFull() {
+      const pagesContainer = document.getElementById('fullReaderPages');
+      const pages = pagesContainer.querySelectorAll('.page');
+      if (currentFullPage < pages.length - 1) {
+        currentFullPage++;
+        pagesContainer.style.transform = 'translateX(-' + (currentFullPage * 100) + '%)';
+      }
+    }
+
+    function prevPageFull() {
+      const pagesContainer = document.getElementById('fullReaderPages');
+      if (currentFullPage > 0) {
+        currentFullPage--;
+        pagesContainer.style.transform = 'translateX(-' + (currentFullPage * 100) + '%)';
+      }
+    }
+
+    // 简单滚动动画（可选扩展）
     const animateOnScroll = () => {
       const elements = document.querySelectorAll('[data-animate]');
       elements.forEach(element => {
@@ -685,26 +715,6 @@
     };
     window.addEventListener('scroll', animateOnScroll);
     animateOnScroll();
-
-    // 简单的阅读器翻页逻辑
-    const currentPage = {};
-    function nextPage(readerId) {
-      const pagesContainer = document.getElementById('pages' + readerId);
-      const pages = pagesContainer.querySelectorAll('.page');
-      if (!currentPage[readerId]) currentPage[readerId] = 0;
-      if (currentPage[readerId] < pages.length - 1) {
-        currentPage[readerId]++;
-        pagesContainer.style.transform = 'translateX(-' + (currentPage[readerId] * 100) + '%)';
-      }
-    }
-    function prevPage(readerId) {
-      const pagesContainer = document.getElementById('pages' + readerId);
-      if (!currentPage[readerId]) currentPage[readerId] = 0;
-      if (currentPage[readerId] > 0) {
-        currentPage[readerId]--;
-        pagesContainer.style.transform = 'translateX(-' + (currentPage[readerId] * 100) + '%)';
-      }
-    }
   </script>
 </body>
 </html>
